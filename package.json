@@ -1,0 +1,28 @@
+{
+  "name": "soportet20",
+  "version": "1.0.0",
+  "description": "Sistema de gestión técnica y tickets de soporte para la **Escuela Técnica N°20 \"Carlos Pellegrini\"**. Monitorea el estado de las computadoras por aula, centraliza los reportes de fallas del parque informático y provee un panel de control para que el equipo técnico y la dirección puedan operar y auditar todo.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/constadinisio/SoportET20.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/constadinisio/SoportET20/issues"
+  },
+  "homepage": "https://github.com/constadinisio/SoportET20#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  }
+}
