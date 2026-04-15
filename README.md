@@ -90,6 +90,7 @@ mysql -u root soportet20_db < migrations/008_seed_aulas_info.sql
 
 ## Documentación
 
+- **[Guía de instalación](docs/INSTALL.md)** — paso a paso desde cero (empezá por acá si sos nuevo).
 - [Arquitectura](docs/ARCHITECTURE.md) — diseño, capas, diagrama de módulos, decisiones técnicas.
 - [Base de datos](docs/DATABASE.md) — schema, tablas, FKs, migraciones, seeds.
 - [API](docs/API.md) — referencia de todos los endpoints (método, auth, parámetros, respuestas).
