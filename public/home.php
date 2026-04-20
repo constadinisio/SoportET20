@@ -415,10 +415,52 @@ require __DIR__ . '/partials/head.php';
 
         (async function init() {
             await loadAulas();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const pcParam = urlParams.get('pc');
+            if (pcParam) {
+                await abrirTicketDesdeQR(pcParam);
+                return;
+            }
+
             const hashTab = window.location.hash.replace('#', '');
             const validTabs = ['dashboard', 'tickets', 'status', 'new-ticket'];
             showTab(validTabs.includes(hashTab) ? hashTab : 'dashboard');
         })();
+
+        // --- Deep-link desde QR: abre "Nuevo Ticket" con la PC pre-seleccionada ---
+        async function abrirTicketDesdeQR(pcId) {
+            try {
+                const res = await fetch(`../backend/computers.php?id=${encodeURIComponent(pcId)}&detalle=1`, { credentials: 'include' });
+                if (res.status === 401) { window.location.href = 'index.php'; return; }
+                if (!res.ok) {
+                    toast(`No se encontró la PC "${pcId}".`, 'error');
+                    showTab('dashboard');
+                    return;
+                }
+                const pc = await res.json();
+
+                const aulaSelect = document.getElementById('formAula');
+                aulaSelect.value = pc.id_aula;
+                selectedAula = pc.id_aula;
+
+                await cargarPcsDelAula(pc.id_aula);
+                const pcSelect = document.getElementById('formPC');
+                pcSelect.value = pc.id;
+
+                showTab('new-ticket');
+                toast(`PC ${pc.id} — ${pc.aula_nombre || 'Aula ' + pc.id_aula}. Completá el ticket.`, 'success');
+
+                if (history.replaceState) {
+                    const clean = window.location.pathname + '#new-ticket';
+                    history.replaceState(null, '', clean);
+                }
+            } catch (err) {
+                console.error('Error abriendo ticket por QR:', err);
+                toast('Error al procesar el QR.', 'error');
+                showTab('dashboard');
+            }
+        }
 
         async function loadAulas() {
             try {
