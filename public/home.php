@@ -313,22 +313,13 @@ require __DIR__ . '/partials/head.php';
                                     <label class="text-slate-300 text-sm font-bold block">Tipo de Problema</label>
                                     <select id="formTipo" required class="w-full bg-[#1e293b] border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
                                         <option value="">Seleccionar categoría</option>
-                                        <option value="hardware">Hardware (Monitor, PC, etc)</option>
+                                        <option value="hardware">Hardware (PC, componentes)</option>
                                         <option value="software">Software / Aplicaciones</option>
                                         <option value="red">Red / Internet</option>
                                         <option value="periferico">Periféricos (Teclado, Mouse)</option>
                                     </select>
                                 </div>
-                                <div class="space-y-3">
-                                    <label class="text-slate-300 text-sm font-bold block">Prioridad</label>
-                                    <div class="flex bg-[#1e293b] p-1 rounded-xl border border-slate-700">
-                                        <button type="button" onclick="setPriority('BAJA')" id="prio-BAJA" class="prio-btn flex-1 py-2.5 text-xs font-bold rounded-lg transition-all text-slate-500">Baja</button>
-                                        <button type="button" onclick="setPriority('MEDIA')" id="prio-MEDIA" class="prio-btn flex-1 py-2.5 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow-lg shadow-blue-600/20">Media</button>
-                                        <button type="button" onclick="setPriority('ALTA')" id="prio-ALTA" class="prio-btn flex-1 py-2.5 text-xs font-bold rounded-lg transition-all text-slate-500">Alta</button>
-                                        <button type="button" onclick="setPriority('CRITICA')" id="prio-CRITICA" class="prio-btn flex-1 py-2.5 text-xs font-bold rounded-lg transition-all text-slate-500">Crítica</button>
-                                    </div>
-                                    <input type="hidden" id="formPrioridad" value="MEDIA">
-                                </div>
+                                <input type="hidden" id="formPrioridad" value="MEDIA">
                             </div>
 
                             <div class="space-y-3">
@@ -700,16 +691,6 @@ require __DIR__ . '/partials/head.php';
         });
 
         // --- New Ticket ---
-        function setPriority(p) {
-            document.getElementById('formPrioridad').value = p;
-            document.querySelectorAll('.prio-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/20');
-                btn.classList.add('text-slate-500');
-            });
-            const activeBtn = document.getElementById('prio-' + p);
-            activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/20');
-            activeBtn.classList.remove('text-slate-500');
-        }
 
         document.getElementById('ticketForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -737,7 +718,7 @@ require __DIR__ . '/partials/head.php';
                     toast(result.message, result.escalado_automatico ? 'warning' : 'success');
                     showTab('tickets');
                     this.reset();
-                    setPriority('MEDIA');
+                    document.getElementById('formPrioridad').value = 'MEDIA';
                     cargarPcsDelAula('');
                 } else {
                     toast('Error: ' + result.message, 'error');
